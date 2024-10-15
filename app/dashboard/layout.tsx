@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/libs/supabase/server";
 import config from "@/config";
+import ButtonAccount from "@/components/ButtonAccount";
 
 // This is a server-side component to ensure the user is logged in.
 // If not, it will redirect to the login page.
@@ -23,5 +24,12 @@ export default async function LayoutPrivate({
     redirect(config.auth.loginUrl);
   }
 
-  return <>{children}</>;
+  return (
+    <main className="min-h-screen p-8 pb-24">
+      <section className="max-w-4xl mx-auto space-y-8">
+        <ButtonAccount />
+        {children}
+      </section>
+    </main>
+  );
 }
