@@ -10,6 +10,9 @@ const nextConfig = {
       "logos-world.net",
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["mdpdf"],
+  },
 };
 
 module.exports = nextConfig;

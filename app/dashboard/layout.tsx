@@ -26,7 +26,7 @@ export default async function LayoutPrivate({
 
   return (
     <main className="min-h-screen p-8 pb-24">
-      <section className="max-w-4xl mx-auto space-y-8">
+      <section className="container mx-auto space-y-8">
         <ButtonAccount />
         {children}
       </section>
