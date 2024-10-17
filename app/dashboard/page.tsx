@@ -4,11 +4,14 @@ import { ChangeEvent } from "react";
 import apiClient from "@/libs/api";
 import { useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import slugify from "@/libs/slugiy";
 
 export default function CVImprove() {
   const [jobDescription, setJobDescription] = useState(``);
   const [improvedCV, setImprovedCV] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // New state for loading
 
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setImprovedCV(e.target.value);
@@ -16,8 +19,7 @@ export default function CVImprove() {
 
   const generatePdf = async () => {
     const slugifiedName = "emmanuel_orozco";
-    const dateNow = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
-    const fileName = `cv_${slugifiedName}_${dateNow}.pdf`;
+    const fileName = `cv_${slugifiedName}_${companyName}.pdf`;
 
     const response = await fetch("/api/convert-pdf", {
       method: "POST",
@@ -30,12 +32,14 @@ export default function CVImprove() {
     const blob = await response.blob();
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
+    link.download = slugify(fileName);
     link.click();
   };
 
   const handleImprove = async () => {
     try {
+      setIsLoading(true); // Set loading to true when the process starts
+
       const { rawCV } = await apiClient.get<string, { rawCV: string }>("/cv");
       const data = await apiClient.post<string, { response: string }>(
         "/improve-cv",
@@ -49,10 +53,17 @@ export default function CVImprove() {
 
       setImprovedCV(result.improvedCV);
       setCoverLetter(result.coverLetter);
+      setCompanyName(result.companyName);
     } catch (error) {
       console.error("Error improving CV:", error);
+    } finally {
+      setIsLoading(false); // Set loading to false when the process ends
     }
   };
+
+  if (isLoading) {
+    return <p>Loading..</p>;
+  }
 
   return (
     <div className="flex flex-col md:flex-row gap-4">
@@ -80,6 +91,21 @@ export default function CVImprove() {
           </button>
         </div>
         <div>
+          <div>
+            <label
+              htmlFor="companyName"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Company Name
+            </label>
+            <input
+              id="companyName"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              placeholder="Enter the company name here..."
+              className="input input-bordered w-full"
+            />
+          </div>
           <label
             htmlFor="improvedCV"
             className="block text-sm font-medium text-gray-700 mb-2"

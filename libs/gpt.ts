@@ -5,7 +5,7 @@ export const sendOpenAi = async (
   messages: any[], // TODO: type this
   userId: string,
   max = 100,
-  temp = 1
+  temp = 0.8
 ) => {
   const url = "https://api.openai.com/v1/chat/completions";
 
