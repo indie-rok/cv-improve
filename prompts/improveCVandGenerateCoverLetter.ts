@@ -5,7 +5,7 @@ export default function ImproveAndGenerateCoverLetter(
   return `
   You are a HR specialist. You are well known to know how to create tailored CVs.
 
-  I'll give you my cv in CV format and the job description I am applying for
+  I'll give you my cv in MD format and the job description I am applying for
   
   CV: ${rawCV}
   
@@ -25,6 +25,9 @@ export default function ImproveAndGenerateCoverLetter(
   Use every and all job experience (dont miss any job in my raw cv when generated my improved CV) when generating my CV.  If the job is for software engineer, substitude the developer advocate experience for software engineer experience. Make up product and skills if necesary (use matching keywords or add with missing keywords) (but keep same dates and companies)
 
   Add acomplishments that are aligned with the job description. They have to be measurable. At least 2 per job. (using matching and missing keywords) 
+  
+  After the name, add a header that aligns with the job description, like: Software Engineer, tech lead or developer advocate.
+  Dont add a list of skills per job, instead group a list of skills at the end.
   
   Words that are forbiden: enhance, pioneering,thrilled, fuels,ensure, Enhancement, Spearheaded, seamlessly. Enhanced, enhancing, 
   Use simpler words instead

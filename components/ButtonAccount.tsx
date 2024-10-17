@@ -6,7 +6,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { User } from "@supabase/supabase-js";
 import { createClient } from "@/libs/supabase/client";
 import apiClient from "@/libs/api";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
@@ -16,6 +16,7 @@ import Link from "next/link";
 // See more at https://shipfa.st/docs/components/buttonAccount
 const ButtonAccount = () => {
   const supabase = createClient();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User>(null);
 
@@ -34,6 +35,14 @@ const ButtonAccount = () => {
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     window.location.href = "/";
+  };
+
+  const handleOriginalCV = () => {
+    router.push("/dashboard/original-cv");
+  };
+
+  const handleImproveCV = () => {
+    router.push("/dashboard");
   };
 
   const handleBilling = async () => {
@@ -127,11 +136,17 @@ const ButtonAccount = () => {
                     </svg>
                     Billing
                   </button> */}
-                  <button className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium">
-                    <Link href={"/dashboard/original-cv"}>CV Original</Link>
+                  <button
+                    className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium"
+                    onClick={handleOriginalCV}
+                  >
+                    CV Original
                   </button>
-                  <button className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium">
-                    <Link href={"/dashboard"}>Improve CV</Link>
+                  <button
+                    className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium"
+                    onClick={handleImproveCV}
+                  >
+                    Improve CV
                   </button>
                   <button
                     className="flex items-center gap-2 hover:bg-error/20 hover:text-error duration-200 py-1.5 px-4 w-full rounded-lg font-medium"

@@ -20,6 +20,12 @@ export async function POST(req: NextRequest) {
       pdf: {
         format: "A4",
         orientation: "portrait",
+        border: {
+          top: 10,
+          left: 10,
+          bottom: 10,
+          right: 10,
+        },
       },
     };
 
@@ -27,10 +33,13 @@ export async function POST(req: NextRequest) {
 
     const pdfBuffer = await fs.readFile(pdf);
 
+    const dateNow = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+    const fileName = `cv_${dateNow}.pdf`;
+
     return new NextResponse(pdfBuffer, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="improvedCV.pdf"',
+        "Content-Disposition": `attachment; filename="${fileName}"`,
       },
     });
   } catch (error) {

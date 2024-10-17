@@ -1,31 +1,71 @@
 import { NextResponse, NextRequest } from "next/server";
-import { sendOpenAi } from "@/libs/gpt";
-import improveAndGenerateCoverLetter from "@/prompts/improveCVandGenerateCoverLetter";
+import { createClient } from "@/libs/supabase/server";
 
 export async function POST(req: NextRequest) {
-  const { rawCV, jobDescription } = await req.json();
+  const body = await req.json();
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
 
-  const messages = [
-    {
-      role: "system",
-      content:
-        "You are a helpful assistant that improves CVs and generates cover letters.",
-    },
-    {
-      role: "user",
-      content: improveAndGenerateCoverLetter(rawCV, jobDescription),
-    },
-  ];
+  if (authError || !user) {
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
+  }
+
+  if (!body.content) {
+    return NextResponse.json(
+      { error: "CV content is required" },
+      { status: 400 }
+    );
+  }
 
   try {
-    const response = await sendOpenAi(messages, "1", 16384); // Assuming userId is 1 for simplicity
+    const { error } = await supabase
+      .from("cvs")
+      .upsert(
+        { content: body.content, user_id: user.id },
+        { onConflict: "user_id" }
+      );
 
-    return NextResponse.json({ response });
-  } catch (error) {
-    console.error("Error generating improved CV:", error);
+    if (error) throw error;
+
+    return NextResponse.json({ message: "CV saved successfully" });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
     return NextResponse.json(
-      { error: "Failed to generate improved CV" },
-      { status: 500 }
+      { error: "User not authenticated" },
+      { status: 401 }
     );
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("cvs")
+      .select("content")
+      .eq("user_id", user.id)
+      .single();
+
+    if (error) throw error;
+
+    return NextResponse.json({ rawCV: data.content });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
