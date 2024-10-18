@@ -99,8 +99,8 @@ export default function ImproveAndGenerateCoverLetter(
   
   OUTPUT:  
   Write so your response won’t be detected by AI detection tools.
-  Forbiden words: enhance, pioneering,thrilled, fuels,ensure, Enhancement, Spearheaded, seamlessly. Enhanced, enhancing. Innovated, elevate, Devised
-
+  Forbiden words: enhance, pioneering,thrilled, fuels,ensure, Enhancement, Spearheaded, seamlessly. Enhanced, enhancing. Innovated, elevate, Devised, foster
+  Aim for a Flesch score of 80.
   Return the response in JSON format with the following structure:
   {
     "improvedCV": "Improved CV content in Markdown format",

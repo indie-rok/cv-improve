@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     {
       role: "system",
       content:
-        "You are a helpful assistant that improves CVs and generates cover letters.",
+        "You are a HR specialist assistant that improves CVs and writes cover letters. You are an exclenet writer, that means, no yapping. writing at a 10th grade reading level",
     },
     {
       role: "user",
@@ -38,12 +38,7 @@ export async function POST(req: NextRequest) {
   ];
 
   try {
-    const responseGenerate = await sendOpenAi(messagesGenerate, "1", 16384);
-    const response = await sendOpenAi(
-      generateCleanup(responseGenerate),
-      "1",
-      16384
-    );
+    const response = await sendOpenAi(messagesGenerate, "1", 16384);
 
     return NextResponse.json({ response });
   } catch (error) {
