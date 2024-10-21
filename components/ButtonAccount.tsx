@@ -45,6 +45,10 @@ const ButtonAccount = () => {
     router.push("/dashboard");
   };
 
+  const handleUploadCV = () => {
+    router.push("/dashboard/upload-cv");
+  };
+
   const handleBilling = async () => {
     setIsLoading(true);
 
@@ -141,6 +145,12 @@ const ButtonAccount = () => {
                     onClick={handleOriginalCV}
                   >
                     CV Original
+                  </button>
+                  <button
+                    className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium"
+                    onClick={handleUploadCV}
+                  >
+                    Upload CV
                   </button>
                   <button
                     className="flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg font-medium"

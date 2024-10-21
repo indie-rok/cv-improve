@@ -8,8 +8,7 @@ export async function POST(req: NextRequest) {
     const { improvedCV } = await req.json();
 
     const filePath = path.join("/tmp", "improvedCV.md");
-    await fs.writeFile(filePath, improvedCV);
-
+    await fs.writeFile(filePath, improvedCV, "utf8");
     const outputFilePath = path.join("/tmp", "improvedCV.pdf");
 
     // Define options for the convert function
@@ -18,13 +17,12 @@ export async function POST(req: NextRequest) {
       destination: outputFilePath,
       styles: path.join(process.cwd(), "gg.css"),
       pdf: {
-        format: "A4",
-        orientation: "portrait",
+        format: "Legal",
         border: {
-          top: 10,
-          left: 10,
-          bottom: 10,
-          right: 10,
+          top: 48,
+          left: 48,
+          bottom: 48,
+          right: 48,
         },
       },
     };

@@ -79,12 +79,9 @@ export default function ImproveAndGenerateCoverLetter(
   Add acomplishments that are aligned with the job description. They have to be measurable. At least 2 per job. (using matching keywords) 
   Dont add a list of skills per job, instead group a list of skills at the end.
   The first job generated is the most important, that means that you should align it more to the job description than others.
-  Add a job title header that aligns with the job description, like: Software Engineer, tech lead or developer advocate.
+  Add a job title header that aligns with the job description, like: Senior Software Engineer.
 
-  Improve my CV based in this 2 job types that I am applying (identify which type I am applying for)
   - Software Engineer: Highlight my technical experience with programing languages and less experience teaching and public speaking. Change my dev advocate job to software engineer.
-
-  - Developer advocate: Add more experience with public speaking, add links to my talks or tutorials created.
 
   Also , generate a cover letter. (Use the company description to generate it) It should follow this template:
 
