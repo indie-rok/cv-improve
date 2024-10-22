@@ -7,20 +7,9 @@ import showdown from "showdown";
 import styles from "./styles.module.css";
 const { setFlavor, Converter } = showdown;
 import { version, GlobalWorkerOptions, getDocument } from "pdfjs-dist";
+import "@ungap/with-resolvers";
 
 const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
-if (typeof Promise.withResolvers === "undefined") {
-  if (window)
-    // @ts-expect-error This does not exist outside of polyfill which this is doing
-    window.Promise.withResolvers = function () {
-      let resolve, reject;
-      const promise = new Promise((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
-      return { promise, resolve, reject };
-    };
-}
 
 GlobalWorkerOptions.workerSrc = workerSrc;
 
