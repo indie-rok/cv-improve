@@ -9,6 +9,20 @@ const { setFlavor, Converter } = showdown;
 import { version, GlobalWorkerOptions, getDocument } from "pdfjs-dist";
 
 const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
+// @ts-expect-error This does not exist outside of polyfill which this is doing
+if (typeof Promise.withResolvers === "undefined") {
+  if (window)
+    // @ts-expect-error This does not exist outside of polyfill which this is doing
+    window.Promise.withResolvers = function () {
+      let resolve, reject;
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      return { promise, resolve, reject };
+    };
+}
+
 GlobalWorkerOptions.workerSrc = workerSrc;
 
 function parseMarkdownToHtml(markdown: string) {
