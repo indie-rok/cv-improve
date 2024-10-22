@@ -10,7 +10,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ["mdpdf", "pdfjs-dist"],
+    serverComponentsExternalPackages: ["mdpdf"],
   },
 };
 
