@@ -2,6 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { sendOpenAi } from "@/libs/gpt";
 import { transcriptCV } from "@/prompts/transcriptCV";
 
+export const maxDuration = 60;
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   const { cv } = await req.json();
   try {
