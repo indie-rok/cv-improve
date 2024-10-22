@@ -1,3 +1,4 @@
+import "@ungap/with-resolvers";
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/libs/supabase/server";

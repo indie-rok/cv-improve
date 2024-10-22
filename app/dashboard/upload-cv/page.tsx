@@ -7,7 +7,6 @@ import showdown from "showdown";
 import styles from "./styles.module.css";
 const { setFlavor, Converter } = showdown;
 import { version, GlobalWorkerOptions, getDocument } from "pdfjs-dist";
-import "@ungap/with-resolvers";
 
 const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
 
